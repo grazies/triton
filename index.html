@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Triton by grazies</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Triton</h1>
+      <h2 class="project-tagline">Joyent Triton DataCenter: a cloud management platform with first class support for containers.</h2>
+      <a href="https://github.com/grazies/triton" class="btn">View on GitHub</a>
+      <a href="https://github.com/grazies/triton/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/grazies/triton/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      
+
+
+
+<h1>
+<a id="triton-datacenter" class="anchor" href="#triton-datacenter" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Triton DataCenter</h1>
+
+<p>Triton DataCenter (just "Triton" for short, formerly "SmartDataCenter" and
+"SDC") is an open-source cloud management platform that delivers next
+generation, container-based, service-oriented infrastructure across one or more
+data centers. With an emphasis on ease of installation and operation, Triton is
+proven at scale: Triton powers the <a href="https://www.joyent.com/datacenter/docs/cloud">Triton
+Cloud</a> and private data centers
+(<a href="https://www.joyent.com/datacenter/docs/enterprise">Triton Enterprise</a>
+worldwide.</p>
+
+<p>This repository provides documentation for the overall Triton project and
+pointers to the other repositories that make up a complete Triton deployment.
+See the <a href="./docs/developer-guide/repos.md">repository list</a>.</p>
+
+<p>Report bugs and request features using <a href="https://github.com/joyent/triton/issues">GitHub Issues</a>.
+For additional resources, you can visit the
+<a href="https://www.joyent.com/developers">Joyent Developer Center</a>.</p>
+
+<h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>A Triton DataCenter installation consists of two or more servers. All servers run
+<a href="http://smartos.org">SmartOS</a>. One server acts as the management server, the
+headnode, which houses the initial set of core services that drive Triton. The
+remainder are compute nodes (CNs) which run instances (containers and
+virtual machines).</p>
+
+<p>Triton features:</p>
+
+<ul>
+<li>SmartOS zones provides high performance container virtualization. KVM support
+on top of zones means secure full Linux and Windows guest OS support.</li>
+<li>RESTful API and CLI tooling for customer self-service</li>
+<li>Complete operator portal (web app)</li>
+<li>Robust and observable service oriented architecture (implemented primarily in
+Node.js)</li>
+<li>Automated USB key installation</li>
+</ul>
+
+<p>Triton consists of the following components:</p>
+
+<ul>
+<li>A public API for provisioning and managing instances (virtual machines),
+networks, users, images, etc.</li>
+<li>An operator portal</li>
+<li>A set of private APIs</li>
+<li>Agents running in the global zone of CNs for management and monitoring</li>
+</ul>
+
+<p>For more details, see:</p>
+
+<ul>
+<li>The <a href="https://docs.joyent.com/private-cloud">Triton Enterprise</a> documentation.</li>
+<li>
+<a href="./docs/developer-guide/architecture.md">Triton DataCenter Architecture</a> for
+overall architecture.</li>
+<li>
+<a href="./docs/reference.md">Triton DataCenter Reference</a> for an
+overview of each component.</li>
+</ul>
+
+<h2>
+<a id="community" class="anchor" href="#community" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Community</h2>
+
+<p>Community discussion about Triton DataCenter happens in two main places:</p>
+
+<ul>
+<li><p>The <em>sdc-discuss</em> mailing list. Once you <a href="https://www.listbox.com/subscribe/?list_id=247449">subscribe to the list</a>,
+you can send mail to the list address: <a href="mailto:sdc-discuss@lists.smartdatacenter.org">sdc-discuss@lists.smartdatacenter.org</a>.
+The mailing list archives are also <a href="https://www.listbox.com/member/archive/247449/=now">available on the web</a>.</p></li>
+<li><p>In the <em>#smartos</em> IRC channel on the <a href="https://freenode.net/">Freenode IRC network</a>.</p></li>
+</ul>
+
+<p>You can also follow <a href="https://twitter.com/SmartDataCenter">@SmartDataCenter</a> on
+Twitter for updates.</p>
+
+<h2>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<h3>
+<a id="cloud-on-a-laptop-coal" class="anchor" href="#cloud-on-a-laptop-coal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cloud on a Laptop (CoaL)</h3>
+
+<p>An easy way to try Triton DataCenter is by downloading a Cloud on a Laptop
+(CoaL) build. This is a VMware virtual appliance providing a
+full Triton headnode for development and testing.</p>
+
+<p>The minimum requirements, practically speaking, for a good CoaL experience
+is a <strong>Mac with at least 16 GB RAM and an SSD</strong>. Currently, almost all team
+members using CoaL are on Macs with VMware Fusion. Vmware Workstation for
+Linux is used by a few in the community. VMware Workstation for Windows
+should work, but has not recently been tested.</p>
+
+<p>See <a href="./docs/developer-guide/coal-setup.md">CoaL Setup</a> for a thorough
+walkthrough including updating CoaL and enabling provisioning on the
+headnode.</p>
+
+<ol>
+<li>
+<p>Start the download of the latest CoaL build. The tarball is
+approximately 2 GB.</p>
+
+<div class="highlight highlight-source-shell"><pre>curl -C - -O https://us-east.manta.joyent.com/Joyent_Dev/public/SmartDataCenter/coal-latest.tgz</pre></div>
+</li>
+<li>
+<p>Install VMware, if you haven't already.</p>
+
+<ul>
+<li>Mac: <a href="http://www.vmware.com/products/fusion">VMware Fusion</a> 5, 7, or 8.</li>
+<li>Windows or Linux: <a href="http://www.vmware.com/products/workstation">VMware Workstation</a>.</li>
+</ul>
+</li>
+<li>
+<p>Configure VMware virtual networks for CoaL's "external" and "admin"
+networks. This is a one time configuration for a VMware installation.</p>
+
+<ol>
+<li><p>Launch VMware at least once after installing VMware.</p></li>
+<li>
+<p>Run Triton set up script for VMware:</p>
+
+<ul>
+<li>
+<p>Mac:</p>
+
+<div class="highlight highlight-source-shell"><pre>curl -s https://raw.githubusercontent.com/joyent/triton/master/tools/coal-mac-vmware-setup <span class="pl-k">|</span> sudo bash</pre></div>
+</li>
+<li>
+<p>Linux:</p>
+
+<div class="highlight highlight-source-shell"><pre>curl -s https://raw.githubusercontent.com/joyent/triton/master/tools/coal-linux-vmware-setup <span class="pl-k">|</span> sudo bash</pre></div>
+</li>
+<li>
+<p>Windows:</p>
+
+<pre><code>Download https://raw.githubusercontent.com/joyent/triton/master/tools/coal-windows-vmware-setup.bat
+Run coal-windows-vmware-setup.bat
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>Unpack the CoaL build that you downloaded in step 1.</p>
+
+<ul>
+<li>
+<p>Mac:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ tar -zxvf coal-latest.tgz
+x root.password.20140911t161518z
+x coal-master-20140911T194415Z-g1a445f5-4gb.vmwarevm/
+x coal-master-20140911T194415Z-g1a445f5-4gb.vmwarevm/USB-headnode.vmx
+x coal-master-20140911T194415Z-g1a445f5-4gb.vmwarevm/zpool.vmdk
+x coal-master-20140911T194415Z-g1a445f5-4gb.vmwarevm/USB-headnode.vmdk
+x coal-master-20140911T194415Z-g1a445f5-4gb.vmwarevm/4gb.img
+...</pre></div>
+</li>
+</ul>
+</li>
+<li>
+<p>Start VMware and load the appliance.</p>
+
+<ul>
+<li>
+<p>Mac: 'open'ing the folder will start VMware and "open and run" the vm:</p>
+
+<pre><code>open coal-&lt;branch&gt;-&lt;build_date_time&gt;-&lt;git_sha1_hash&gt;-4gb.vmwarevm
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Boot the headnode.</p>
+
+<p>When you are prompted with the GRUB menu press the "down" arrow.</p>
+
+<ol>
+<li><p>Press the down arrow key to highlight "Live 64-bit".</p></li>
+<li>
+<p>Press 'c' to go to the command line for GRUB.</p>
+
+<p>By default, the OS will redirect the console to ttyb which is fine
+for production but needs to be changed for CoaL. While in the command line:</p>
+
+<pre><code>  grub&gt; variable os_console vga
+</code></pre>
+</li>
+<li><p>Press enter.</p></li>
+<li><p>Press esc to get back to the GRUB menu.</p></li>
+<li><p>Boot "Live 64-bit" by pressing enter.</p></li>
+</ol>
+</li>
+<li><p>Configure the headnode.</p></li>
+</ol>
+
+<p>Use the following table to configure your CoaL with settings that
+are fine for development.</p>
+
+<p>If you make a mistake while entering the configuration you can restart
+the VMware virtual machine. Also, as the onscreen instructions describe,
+the last step in configuration allows editing the resulting configuration file.</p>
+
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Instructions</em></td>
+<td>↵</td>
+<td></td>
+</tr>
+<tr>
+<td>Company Name</td>
+<td>Clavius</td>
+<td><em>Can substitute with your choice.</em></td>
+</tr>
+<tr>
+<td>Region of Datacenter</td>
+<td>orbit</td>
+<td><em>Can substitute with your choice.</em></td>
+</tr>
+<tr>
+<td>Name of Datacenter</td>
+<td>coal-1</td>
+<td>(Availability zone.) <em>Can substitute with your choice.</em>
+</td>
+</tr>
+<tr>
+<td>Location of DataCenter</td>
+<td>Moon, Earth</td>
+<td><em>Can substitute with your choice.</em></td>
+</tr>
+<tr>
+<td><em>Instructions</em></td>
+<td>↵</td>
+<td></td>
+</tr>
+<tr>
+<td>'admin' interface</td>
+<td>2</td>
+<td>The second NIC is set up as the admin network by the CoaL networking script</td>
+</tr>
+<tr>
+<td>(admin) headnode IP address</td>
+<td>10.99.99.7</td>
+<td>Must use this value.</td>
+</tr>
+<tr>
+<td>(admin) headnode netmask:</td>
+<td>↵</td>
+<td>Use the default.</td>
+</tr>
+<tr>
+<td>(admin) Zone's starting IP address:</td>
+<td>↵</td>
+<td>Use the default.</td>
+</tr>
+<tr>
+<td>Add external network now? (Y/n)</td>
+<td>Y</td>
+<td>Must use this value.</td>
+</tr>
+<tr>
+<td>'external' interface</td>
+<td>1</td>
+<td>The first NIC is set up as the external network by the CoaL networking script</td>
+</tr>
+<tr>
+<td>(external) headnode IP address</td>
+<td>10.88.88.200</td>
+<td>Must use this value.</td>
+</tr>
+<tr>
+<td>(external) headnode netmask:</td>
+<td>↵</td>
+<td>Use the default.</td>
+</tr>
+<tr>
+<td>(external) gateway IP address:</td>
+<td>10.88.88.2</td>
+<td>Must use this value.</td>
+</tr>
+<tr>
+<td>(external) network VLAN ID</td>
+<td>↵</td>
+<td>Use default. The external network is not on a VLAN in CoaL</td>
+</tr>
+<tr>
+<td>Starting Provisionable IP address for external Network</td>
+<td>↵</td>
+<td>Use the default.</td>
+</tr>
+<tr>
+<td>Ending Provisionable IP address for external Network</td>
+<td>↵</td>
+<td>Use the default.</td>
+</tr>
+<tr>
+<td>Default gateway IP address:</td>
+<td>↵</td>
+<td>Use the default.</td>
+</tr>
+<tr>
+<td>Primary DNS Server</td>
+<td>↵</td>
+<td>Use the default.</td>
+</tr>
+<tr>
+<td>Secondary DNS Server</td>
+<td>↵</td>
+<td>Use the default.</td>
+</tr>
+<tr>
+<td>Head node domain name</td>
+<td>example.com</td>
+<td><em>Can substitute with your choice.</em></td>
+</tr>
+<tr>
+<td>DNS Search Domain</td>
+<td>example.com</td>
+<td><em>Can substitute with your choice.</em></td>
+</tr>
+<tr>
+<td>NTP Server IP Address</td>
+<td>↵</td>
+<td>Use the default.</td>
+</tr>
+<tr>
+<td>"root" password</td>
+<td>rootpass</td>
+<td><em>Can substitute with your choice.</em></td>
+</tr>
+<tr>
+<td>Confirm "root" password</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>"admin" password</td>
+<td>adminpass1</td>
+<td><em>Can substitute with your choice.</em></td>
+</tr>
+<tr>
+<td>Confirm "admin" password</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Administrator's email</td>
+<td>↵</td>
+<td>Use the default.</td>
+</tr>
+<tr>
+<td>Support email</td>
+<td>↵</td>
+<td>Use the default.</td>
+</tr>
+<tr>
+<td>Confirm password</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Enable telemetry</td>
+<td>"true" or "false"</td>
+<td><em>Can use your choice</em></td>
+</tr>
+<tr>
+<td>Verify Configuration</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Verify Configuration Again</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>CoaL will now install based on the configuration parameters entered
+above. Installation has been observed to take up to 20 minutes,
+particularly if slow laptop HDD.</li>
+</ul>
+
+<p>After setup is complete you should be able to SSH into your CoaL on the
+"admin" network. Example:</p>
+
+<div class="highlight highlight-source-shell"><pre>ssh root@10.99.99.7  <span class="pl-c"># password 'rootpass'</span></pre></div>
+
+<p>For just a taste run <code>svcs</code> to see running <a href="http://wiki.smartos.org/display/DOC/Using+the+Service+Management+Facility">SMF
+services</a>.
+Run <code>vmadm list</code> to see a list of current VMs (SmartOS
+<a href="http://wiki.smartos.org/display/DOC/Zones">zones</a>). Each Triton service runs in
+its own zone. See <a href="https://docs.joyent.com/private-cloud">the Joyent customer documentation</a>.</p>
+
+<p>As mentioned previously, see <a href="./docs/developer-guide/coal-setup.md">CoaL Setup</a>
+for a thorough walkthrough.</p>
+
+<h3>
+<a id="installing-triton-on-a-physical-server" class="anchor" href="#installing-triton-on-a-physical-server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing Triton on a Physical Server</h3>
+
+<p>A Triton DataCenter server runs SmartOS which is a live image. This means that
+it boots from a USB flash drive (key).
+a physical USB key, inserting the key and booting the server from that key.
+To install Triton, first obtain the latest release USB build.</p>
+
+<h4>
+<a id="hardware" class="anchor" href="#hardware" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Hardware</h4>
+
+<p>For Triton development only, the minimum server hardware is:</p>
+
+<ul>
+<li>8 GB USB flash drive</li>
+<li>Intel Processors with VT-x and EPT support (all Xeon since Nehalem)</li>
+<li>16 GB RAM</li>
+<li>6 GB available storage</li>
+</ul>
+
+<p>Hardware RAID is not recommended. Triton will lay down a ZFS ZPOOL across all
+available disks on install. You'll want much more storage if you're working with
+images and instances.</p>
+
+<p>If setting up a Triton DataCenter pilot then you'll want to review
+the <a href="https://docs.joyent.com/private-cloud/install/site-and-network-requirements">Minimum Requirements</a>
+and <a href="https://docs.joyent.com/private-cloud/install/deployment-planning">Installation Prerequisites</a>
+which include IPMI and at least 10 gigabit Ethernet. The supported hardware
+components for SmartOS are described in the <a href="http://wiki.smartos.org/display/DOC/Hardware+Requirements">SmartOS Hardware Requirements</a>.
+Joyent certified hardware for Triton DataCenter are all in
+the <a href="https://docs.joyent.com/private-cloud/hardware">Joyent Manufacturing Database</a>.</p>
+
+<h4>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h4>
+
+<p>To install Triton, first download the latest release image:</p>
+
+<div class="highlight highlight-source-shell"><pre>curl -C - -O https://us-east.manta.joyent.com/Joyent_Dev/public/SmartDataCenter/usb-latest.tgz</pre></div>
+
+<p>Once you have downloaded the latest release image, you will need to
+<a href="https://docs.joyent.com/private-cloud/install/installation-media">write it to a USB key</a>
+boot the headnode server using the USB key, and follow the install prompts. All steps necessary
+to plan, install, and configure Triton DataCenter (Triton) are available in the Joyent
+customer documenation <a href="https://docs.joyent.com/private-cloud/install">Installing Triton Elastic Container Infrastructure</a>.</p>
+
+<h2>
+<a id="building" class="anchor" href="#building" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Building</h2>
+
+<p>Triton is composed of several pre-built components:</p>
+
+<ul>
+<li>A <a href="https://github.com/joyent/smartos-live">SmartOS <em>platform</em> image</a>. This is
+a slightly customized build of vanilla SmartOS for Triton.</li>
+<li>
+<em>Virtual machine images</em> for Triton services (e.g. imgapi, vmapi, adminui), which
+are provisioned as VMs at install time.</li>
+<li>Agents bundled into a <a href="https://github.com/joyent/sdc-agents-installer">single
+package</a>
+installed into the global zone of each compute node.</li>
+</ul>
+
+<p>Each component is built separately and then all are combined into CoaL and USB
+builds (see the preceding sections) via the <a href="https://github.com/joyent/sdc-headnode">sdc-headnode
+repository</a>. The built components are
+typically stored in a <a href="https://github.com/joyent/manta">Manta object store</a>,
+e.g. <a href="https://www.joyent.com/products/manta">Joyent's public Manta</a>,
+and pulled from there. For example, Joyent's builds push to
+<code>/Joyent_Dev/public/builds</code> in Joyent's public Manta in us-east-1
+(<a href="https://us-east.manta.joyent.com/">https://us-east.manta.joyent.com/</a>).</p>
+
+<p>You can build your own CoaL and USB images on Mac or SmartOS (see the
+<a href="https://github.com/joyent/sdc-headnode#readme">sdc-headnode README</a>). However,
+all other Triton components must be built using a running Triton
+(e.g. on the <a href="https://www.joyent.com/products/compute-service">Joyent Cloud</a>
+or in a local CoaL). See <a href="./docs/developer-guide/building.md">the building document</a>
+for details on building each of the Triton components.</p>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>To report bugs or request features, submit issues here on
+GitHub, <a href="https://github.com/joyent/triton/issues">joyent/triton/issues</a>
+(or on the GitHub issue tracker for the relevant project).
+For support of Joyent products and services, please contact <a href="https://help.joyent.com/home">Joyent customer
+support</a> instead.</p>
+
+<p>See the <a href="CONTRIBUTING.md">Contribution Guidelines</a> for information about
+contributing changes to the project.</p>
+
+<h2>
+<a id="design-principles" class="anchor" href="#design-principles" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design Principles</h2>
+
+<p>Triton DataCenter is very opinionated about how to architect a cloud. These
+opinions are the result of many years of deploying and debugging
+the <a href="https://www.joyent.com/public-cloud">Joyent public cloud</a>.
+Design principles include the following:</p>
+
+<ul>
+<li>A VM's primary storage should be local disk, not over the network -- this
+avoids difficult to debug performance pathologies.</li>
+<li>Communication between internal APIs should occur in its own control plane
+(network) that is separate from the customer networks. Avoid communicating
+over the open Internet if possible.</li>
+<li>A provisioned VM should rely as little as possible on Triton services outside of
+the operating system for its normal operation.</li>
+<li>Installation and operation should require as little human intervention as
+possible.</li>
+</ul>
+
+<p>The goals behind the design of Triton services include:</p>
+
+<ul>
+<li>All parts of the stack should be observable.</li>
+<li>The state of the running service should be simple to obtain.</li>
+<li>The internals of the system should make it straightfoward to debug from a
+core file (from a crash or taken from a running process using
+<a href="http://smartos.org/man/1/gcore">gcore(1)</a>).</li>
+<li>Services should be RESTful and accept JSON unless there is a compelling
+reason otherwise.</li>
+<li>Services should avoid keeping state and should not assume that there is
+only one instance of that service running. This allows multiple instances
+of a service to be provisioned for high availability.</li>
+<li>Node.js and C should be used for new services.</li>
+</ul>
+
+<h2>
+<a id="dependencies-and-related-projects" class="anchor" href="#dependencies-and-related-projects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dependencies and Related Projects</h2>
+
+<p>Triton DataCenter uses <a href="http://smartos.org">SmartOS</a> as the host operating
+system. The SmartOS hypervisor provides both SmartOS zone (container) and
+KVM virtualization.</p>
+
+<p>Joyent's open-source <a href="https://github.com/joyent/manta">Manta project</a>
+is an HTTP-based object store with built-in support to run arbitrary
+programs on data at rest (i.e., without copying data out of the object store).
+Manta runs on and integrates with Triton DataCenter.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>Triton DataCenter is licensed under the
+<a href="http://mozilla.org/MPL/2.0/">Mozilla Public License version 2.0</a>.
+See the file LICENSE. SmartOS is <a href="http://smartos.org/cddl/">licensed separately</a>.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/grazies/triton">Triton</a> is maintained by <a href="https://github.com/grazies">grazies</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
